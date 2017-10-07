@@ -17,8 +17,8 @@ class Airports extends CI_Model
         'L_YZP' => array(
             'code' => 'YZP',
             'location' => 'Sandspit Airport'),
-        'L_YZT' => array(
-            'code' => 'YZT',
+        'L_YXT' => array(
+            'code' => 'YXT',
             'location' => 'Terrace Airport'),
     );
 
