@@ -62,4 +62,10 @@ class Fleet extends CI_Model
         return $this->data;
     }
 
+    // Get number of planes in fleet
+    public function size()
+    {
+        return count($this->data);
+    }
+
 }
