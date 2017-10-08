@@ -30,7 +30,7 @@ class Flights extends Application
     * departure time, arrival time and airport codes to disaply in a mouseover.
     */
     private function loadFlightSchedule() {
-        $flights =  $this->flight->all();
+        $flights =  $this->flightsModel->all();
         $airports = $this->airports->all();
         $this->data['flightSchedule'] = array();
 
