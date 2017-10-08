@@ -41,7 +41,7 @@ class Flights extends Application
             $departure_airport = $airports[$departsFrom];
             $arrival_airport = $airports[$arrivesAt];
             $details = 'From: ' . $arrival_airport['code'] . ' At: '
-                . $value['departureTime'] . ' To: ' . $departure_airport['code']
+                . $value['departureTime'] . "\n" . 'To: ' . $departure_airport['code']
                 . ' At: ' . $value['arrivalTime'];
             //Adds the items to the array that will be displayed
             array_push($this->data['flightSchedule'],
