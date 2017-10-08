@@ -12,21 +12,27 @@ if (!defined('APPPATH'))
         <link rel="stylesheet" type="text/css" href="/assets/css/style.css"/>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <img src="/assets/images/logo.png" alt="lightning" style="width:32px;height:32px;">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">{menubar}</div>
+            </div>
+        </nav>
         <div class="container">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    {menubar}
-                </div>
-            </div>
-            <div id="content">
-                <h1>{pagetitle}</h1>
-                {content}
-            </div>
-            <div id="footer" class="span12">
-                {footer}
-            </div>
+            <h1 class="my-4">{pagetitle}
+                <small>We'll get you there in a flash!</small>
+            </h1>
+            {content}
         </div>
-        <script src="/assets/js/jquery-1.11.1.min.js"></script>
+        <footer class="py-5">
+            <div class="container">
+                <p class="m-0 text-center">{footer}</p>
+            </div>
+        </footer>
+        <script src="/assets/js/jquery.min.js"></script>
         <script src="/assets/js/bootstrap.min.js"></script>
     </body>
 </html>
