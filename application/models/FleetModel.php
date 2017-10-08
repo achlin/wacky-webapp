@@ -8,7 +8,7 @@ class FleetModel extends CI_Model
 
     // The mock plane data
     var $data = array(
-        'L_kingair' => array(
+        'Kkingair' => array(
             'manufacturer' => 'Beechcraft',
             'model' => 'King Air C90',
             'price' => '3900',
@@ -17,7 +17,7 @@ class FleetModel extends CI_Model
             'cruise' => '500',
             'takeoff' => '1402',
             'hourly' => '990'),
-        'L_pc12ng' => array(
+        'Kpc12ng' => array(
             'manufacturer' => 'Pilatus',
             'model' => 'PC-12 NG',
             'price' => '3300',
@@ -26,7 +26,7 @@ class FleetModel extends CI_Model
             'cruise' => '500',
             'takeoff' => '450',
             'hourly' => '727'),
-        'L_caravan' => array(
+        'Kcaravan' => array(
             'manufacturer' => 'Cessna',
             'model' => 'Grand Caravan EX',
             'price' => '2300',

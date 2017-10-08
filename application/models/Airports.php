@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Dummy model class that represents the airports our airline services 
+ * Dummy model class that represents the airports our airline services
  */
 class Airports extends CI_Model
 {
 
     // The mock airport data
     var $data = array(
-        'L_YPR' => array(
+        'KYPR' => array(
             'code' => 'YPR',
             'location' => 'Prince Rupert Airport'),
-        'L_ZMT' => array(
+        'KZMT' => array(
             'code' => 'ZMT',
             'location' => 'Masset Airport'),
-        'L_YZP' => array(
+        'KYZP' => array(
             'code' => 'YZP',
             'location' => 'Sandspit Airport'),
-        'L_YXT' => array(
+        'KYXT' => array(
             'code' => 'YXT',
             'location' => 'Terrace Airport'),
     );
