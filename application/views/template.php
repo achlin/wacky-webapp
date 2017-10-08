@@ -22,9 +22,12 @@ if (!defined('APPPATH'))
             </div>
         </nav>
         <div class="container">
-            <h1 class="my-4">{pagetitle}
-                <small>We'll get you there in a flash!</small>
-            </h1>
+            <div id="title">
+                <h1 class="my-4">{pagetitle}
+                    <br/>
+                    <small>We'll get you there in a flash!</small>
+                </h1>
+            </div>
             {content}
         </div>
         <footer class="py-5">
