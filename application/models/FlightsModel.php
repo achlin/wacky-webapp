@@ -3,7 +3,7 @@
 /**
  * Dummy model class that represent our airline's flight schedule
  */
-class Flights extends CI_Model
+class FlightsModel extends CI_Model
 {
     // The mock flight data
     var $data = array(

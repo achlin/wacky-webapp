@@ -12,3 +12,10 @@ body {
 .portfolio-item {
     margin-bottom: 30px;
 }
+#flightTable {
+    width: 80%;
+    margin: 5% 20%;
+}
+
+#flightTable th {
+    text-align: left;
