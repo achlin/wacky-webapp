@@ -23,14 +23,15 @@ class Fleet extends Application
         $this->render();
     }
 
+    /**
+    * Changes the view to that of a single plane.  Adds the plane's information
+    * to the available data.
+    */
     public function show($key) {
 
         $this->data['pagebody'] = 'plane';
 
-        // build the list of authors, to pass on to our view
         $source = $this->fleetModel->get($key);
-
-        // pass on the data to present, adding the author record's fields
         $this->data = array_merge($this->data, (array) $source);
 
         $this->render();
