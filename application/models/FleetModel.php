@@ -3,7 +3,7 @@
 /**
  * Dummy model class that represent our airline's fleet
  */
-class Fleet extends CI_Model
+class FleetModel extends CI_Model
 {
 
     // The mock plane data

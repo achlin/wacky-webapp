@@ -11,8 +11,8 @@ class Homepage extends Application
     public function index()
     {
         $this->data['pagebody'] = 'homepage';
-        $this->data['fleetsize'] = $this->fleet->size();
-        $this->data['flightsize'] = $this->flights->size();
+        $this->data['fleetsize'] = $this->fleetModel->size();
+        $this->data['flightsize'] = $this->flightsModel->size();
 
         $baseid = "L_YPR";
         $airports = $this->airports->all();
@@ -20,7 +20,7 @@ class Homepage extends Application
         $this->data['baselocation'] = $airports['L_YPR']['location'];
         unset($airports[$baseid]);
         $this->data['airports'] = $airports;
-        
+
         $this->render();
     }
 
