@@ -14,10 +14,10 @@ class Homepage extends Application
         $this->data['fleetsize'] = $this->fleetModel->size();
         $this->data['flightsize'] = $this->flightsModel->size();
 
-        $baseid = "L_YPR";
+        $baseid = 'KYPR';
         $airports = $this->airports->all();
         $this->data['basecode'] = $airports[$baseid]['code'];
-        $this->data['baselocation'] = $airports['L_YPR']['location'];
+        $this->data['baselocation'] = $airports[$baseid]['location'];
         unset($airports[$baseid]);
         $this->data['airports'] = $airports;
 

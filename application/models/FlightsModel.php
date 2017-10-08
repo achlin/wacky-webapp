@@ -7,71 +7,71 @@ class FlightsModel extends CI_Model
 {
     // The mock flight data
     var $data = array(
-        // L_caravan routes
-        'L_YPRZMT' => array(
-            'departsFrom' => 'L_YPR', //airport id
-            'arrivesAt' => 'L_ZMT',   //airport id
+        // Kcaravan routes
+        'KYPRZMT' => array(
+            'departsFrom' => 'KYPR', //airport id
+            'arrivesAt' => 'KZMT',   //airport id
             'departureTime' => '0800',
             'arrivalTime' => '0900',
-            'plane' => 'L_caravan'),  //plane id
-        'L_ZMTYZP' => array(          //... and so on
-            'departsFrom' => 'L_ZMT',
-            'arrivesAt' => 'L_YZP',
+            'plane' => 'Kcaravan'),  //plane id
+        'KZMTYZP' => array(          //... and so on
+            'departsFrom' => 'KZMT',
+            'arrivesAt' => 'KYZP',
             'departureTime' => '1300',
             'arrivalTime' => '1400',
-            'plane' => 'L_caravan'),
-        'L_YZPYPR' => array(
-            'departsFrom' => 'L_YZP',
-            'arrivesAt' => 'L_YPR',
+            'plane' => 'Kcaravan'),
+        'KYZPYPR' => array(
+            'departsFrom' => 'KYZP',
+            'arrivesAt' => 'KYPR',
             'departureTime' => '1800',
             'arrivalTime' => '1900',
-            'plane' => 'L_caravan'),
+            'plane' => 'Kcaravan'),
 
-        // L_kingair routes
-        'L_YPRYZP' => array(
-            'departsFrom' => 'L_YPR',
-            'arrivesAt' => 'L_YZP',
+        // Kkingair routes
+        'KYPRYZP' => array(
+            'departsFrom' => 'KYPR',
+            'arrivesAt' => 'KYZP',
             'departureTime' => '0900',
             'arrivalTime' => '1000',
-            'plane' => 'L_kingair'),
-        'L_YZPZMT' => array(
-            'departsFrom' => 'L_YZP',
-            'arrivesAt' => 'L_ZMT',
+            'plane' => 'Kkingair'),
+        'KYZPZMT' => array(
+            'departsFrom' => 'KYZP',
+            'arrivesAt' => 'KZMT',
             'departureTime' => '1400',
             'arrivalTime' => '1500',
-            'plane' => 'L_kingair'),
-        'L_ZMTYPR' => array(
-            'departsFrom' => 'L_ZMT',
-            'arrivesAt' => 'L_YPR',
+            'plane' => 'Kkingair'),
+        'KZMTYPR' => array(
+            'departsFrom' => 'KZMT',
+            'arrivesAt' => 'KYPR',
             'departureTime' => '1900',
             'arrivalTime' => '2000',
-            'plane' => 'L_kingair'),
+            'plane' => 'Kkingair'),
 
-        // pc12ng routes
-        'L_YPRYXT1' => array(
-            'departsFrom' => 'L_YPR',
-            'arrivesAt' => 'L_YXT',
+        // Kpc12ng routes
+        'KYPRYXT1' => array(
+            'departsFrom' => 'KYPR',
+            'arrivesAt' => 'KYXT',
             'departureTime' => '0800',
             'arrivalTime' => '0900',
-            'plane' => 'L_pc12ng'),
-        'L_YXTYPR1' => array(
-            'departsFrom' => 'L_YXT',
-            'arrivesAt' => 'L_YPR',
+            'plane' => 'Kpc12ng'),
+        'KYXTYPR1' => array(
+            'departsFrom' => 'KYXT',
+            'arrivesAt' => 'KYPR',
             'departureTime' => '1300',
             'arrivalTime' => '1400',
-            'plane' => 'L_pc12ng'),
-        'L_YPRYXT2' => array(
-            'departsFrom' => 'L_YPR',
-            'arrivesAt' => 'L_YXT',
+            'plane' => 'Kpc12ng'),
+        'KYPRYXT2' => array(
+            'departsFrom' => 'KYPR',
+            'arrivesAt' => 'KYXT',
             'departureTime' => '1800',
             'arrivalTime' => '1900',
-            'plane' => 'L_pc12ng'),
-        'L_YXTYPR2' => array(
-            'departsFrom' => 'L_YXT',
-            'arrivesAt' => 'L_YPR',
+            'plane' => 'Kpc12ng'),
+        'KYXTYPR2' => array(
+            'departsFrom' => 'KYXT',
+            'arrivesAt' => 'KYPR',
             'departureTime' => '2000',
             'arrivalTime' => '2100',
-            'plane' => 'L_pc12ng'),
+            'plane' => 'Kpc12ng'),
     );
 
     // Constructor
