@@ -8,9 +8,9 @@ class Flights extends Application
 {
 
     function __construct()
-	{
-		parent::__construct();
-	}
+    {
+        parent::__construct();
+    }
 
     /**
      * Index Page for this controller.
