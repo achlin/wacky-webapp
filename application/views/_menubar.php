@@ -3,8 +3,9 @@
  * Menu navbar, just an unordered list
  */
 ?>
-<ul class="nav">
+<ul class="navbar-nav ml-auto">
     {menudata}
-    <li><a href="{link}">{name}</a></li>
+    <li class="nav-item">
+        <a class ="nav-link" href="{link}">{name}</a></li>
     {/menudata}
 </ul>

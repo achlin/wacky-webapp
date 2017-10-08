@@ -12,6 +12,15 @@ class Homepage extends Application
     {
         $this->data['pagebody'] = 'homepage';
         $this->data['fleetsize'] = $this->fleet->size();
+        $this->data['flightsize'] = $this->flights->size();
+
+        $baseid = "L_YPR";
+        $airports = $this->airports->all();
+        $this->data['basecode'] = $airports[$baseid]['code'];
+        $this->data['baselocation'] = $airports['L_YPR']['location'];
+        unset($airports[$baseid]);
+        $this->data['airports'] = $airports;
+        
         $this->render();
     }
 

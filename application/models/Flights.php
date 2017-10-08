@@ -134,4 +134,10 @@ class Flights extends CI_Model
         }
         return null;
     }
+
+    // Get number of flights
+    public function size()
+    {
+        return count($this->data);
+    }
 }
