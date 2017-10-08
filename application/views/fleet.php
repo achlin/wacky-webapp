@@ -2,6 +2,7 @@
     <table class="table table-striped table-inverse" id="fleetTable">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Manufacturer</th>
                 <th>Model</th>
             </tr>
@@ -10,10 +11,13 @@
             {fleet}
             <tr>
                 <td>
+                    <a href="/fleet/show/{key}">{key}</a>
+                </td>
+                <td>
                     {manufacturer}
                 </td>
                 <td>
-                    <a href="/fleet/show/{key}">{model}</a>
+                    {model}
                 </td>
             </tr>
             {/fleet}
