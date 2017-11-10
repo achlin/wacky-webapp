@@ -11,7 +11,7 @@
             {fleet}
             <tr>
                 <td>
-                    <a href="/fleet/show/{key}">{key}</a>
+                    <a href="/fleet/show/{id}">{id}</a>
                 </td>
                 <td>
                     {manufacturer}
