@@ -1,0 +1,11 @@
+id,departsFrom,arrivesAt,departureTime,arrivalTime,plane
+"KYPRZMT","KYPR","KZMT",0800,0900,"Kcaravan"
+"KZMTYZP","KZMT","KYZP",1300,1400,"Kcaravan"
+"KYZPYPR","KYZP","KYPR",1800,1900,"Kcaravan"
+"KYPRYZP","KYPR","KYZP",0900,1000,"Kkingair"
+"KYZPZMT","KYZP","KZMT",1400,1500,"Kkingair"
+"KZMTYPR","KZMT","KYPR",1900,2000,"Kkingair"
+"KYPRYXT1","KYPR","KYXT",0800,0900,"Kpc12ng"
+"KYXTYPR1","KYXT","KYPR",1300,1400,"Kpc12ng"
+"KYPRYXT2","KYPR","KYXT",1800,1900,"Kpc12ng"
+"KYXTYPR2","KYXT","KYPR",2000,2100,"Kpc12ng"

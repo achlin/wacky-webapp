@@ -36,18 +36,18 @@ class Flights extends Application
 
         // Loop through all the flights and find the locations of the airports
         foreach($flights as $key => $value) {
-            $departsFrom = $value['departsFrom'];
-            $arrivesAt = $value['arrivesAt'];
+            $departsFrom = $value->departsFrom;
+            $arrivesAt = $value->arrivesAt;
             $departure_airport = $airports[$departsFrom];
             $arrival_airport = $airports[$arrivesAt];
-            $details = 'From: ' . $arrival_airport['code'] . ' At: '
-                . $value['departureTime'] . "\n" . 'To: ' . $departure_airport['code']
-                . ' At: ' . $value['arrivalTime'];
+            $details = 'From: ' . $arrival_airport->code . ' At: '
+                . $value->departureTime . "\n" . 'To: ' . $departure_airport->code
+                . ' At: ' . $value->arrivalTime;
             //Adds the items to the array that will be displayed
             array_push($this->data['flightSchedule'],
                 array('flightNo' => $key,
-                'departsFrom' => $departure_airport['location'],
-                'arrivesAt' => $arrival_airport['location'],
+                'departsFrom' => $departure_airport->location,
+                'arrivesAt' => $arrival_airport->location,
                 'details' => $details
             ));
         }

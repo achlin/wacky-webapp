@@ -27,11 +27,11 @@ class Fleet extends Application
     * Changes the view to that of a single plane.  Adds the plane's information
     * to the available data.
     */
-    public function show($key) {
+    public function show($id) {
 
         $this->data['pagebody'] = 'plane';
 
-        $source = $this->fleetModel->get($key);
+        $source = $this->fleetModel->get($id);
         $this->data = array_merge($this->data, (array) $source);
 
         $this->render();
