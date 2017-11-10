@@ -1,5 +1,5 @@
 <div class="row">
-    <table class="table table-striped table-inverse" id="fleetTable">
+    <table class="table table-striped table-dark" id="fleetTable">
         <thead>
             <tr>
                 <th>ID</th>

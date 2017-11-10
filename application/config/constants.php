@@ -87,3 +87,12 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 defined('DATA_AIRPORTS')            OR define('DATA_AIRPORTS', '../data/airports.csv');
 defined('DATA_FLEET')               OR define('DATA_FLEET', '../data/fleet.csv');
 defined('DATA_FLIGHTS')             OR define('DATA_FLIGHTS', '../data/flights.csv');
+
+/*
+|--------------------------------------------------------------------------
+| User Roles
+|--------------------------------------------------------------------------
+|
+*/
+defined('ROLE_GUEST') OR define('ROLE_GUEST', 'Guest');
+defined('ROLE_ADMIN') OR define('ROLE_ADMIN', 'Admin');

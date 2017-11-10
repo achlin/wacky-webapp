@@ -1,5 +1,5 @@
 <div class="row">
-    <table class="table table-striped table-inverse">
+    <table class="table table-striped table-dark">
         <tbody>
             <tr>
                 <td>Model:</td>
