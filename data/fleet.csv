@@ -1,4 +1,4 @@
-id,manufacturer,model,price,seats,reach,cruise,takeoff,hourly
+key,manufacturer,model,price,seats,reach,cruise,takeoff,hourly
 "Kkingair","Beechcraft","King Air C90",3900,12,2446,500,1402,990
 "Kpc12ng","Pilatus","PC-12 NG",3300,9,4147,500,450,727
 "Kcaravan","Cessna","Grand Caravan EX",2300,14,1689,340,660,389

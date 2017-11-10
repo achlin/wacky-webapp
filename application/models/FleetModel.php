@@ -9,7 +9,7 @@ class FleetModel extends CSV_Model
     // Constructor
     public function __construct()
     {
-        parent::__construct(APPPATH . DATA_FLEET, 'id');
+        parent::__construct(APPPATH . DATA_FLEET, 'key');
     }
 
     // Get all the planes
@@ -19,7 +19,7 @@ class FleetModel extends CSV_Model
 
         foreach ($this->all() as $plane)
         {
-            $fleet[$plane->id] = (array)$plane;
+            $fleet[$plane->key] = (array)$plane;
         }
 
         return $fleet;
