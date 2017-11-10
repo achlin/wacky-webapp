@@ -12,19 +12,6 @@ class FlightsModel extends CSV_Model
         parent::__construct(APPPATH . DATA_FLIGHTS, 'id');
     }
 
-    // Get all the flights
-    public function allAsArray()
-    {
-        $flights = array();
-
-        foreach ($this->all() as $flight)
-        {
-            $flights[$flight->id] = (array)$flight;
-        }
-
-        return $flights;
-    }
-
     // Gets the departure airport
     // requires that the airport model has been loaded
     public function getDepartureAirport($key)

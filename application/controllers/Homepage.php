@@ -15,9 +15,9 @@ class Homepage extends Application
         $this->data['flightsize'] = $this->flightsModel->size();
 
         $baseid = 'KYPR';
-        $airports = $this->airports->allAsArray();
-        $this->data['basecode'] = $airports[$baseid]['code'];
-        $this->data['baselocation'] = $airports[$baseid]['location'];
+        $airports = $this->airports->all();
+        $this->data['basecode'] = $airports[$baseid]->code;
+        $this->data['baselocation'] = $airports[$baseid]->location;
         unset($airports[$baseid]);
         $this->data['airports'] = $airports;
 

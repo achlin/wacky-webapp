@@ -12,17 +12,4 @@ class Airports extends CSV_Model
         parent::__construct(APPPATH . DATA_AIRPORTS, 'id');
     }
 
-    // Get all the airports in an array
-    public function allAsArray()
-    {
-        $airports = array();
-
-        foreach ($this->all() as $airport)
-        {
-            $airports[$airport->id] = (array)$airport;
-        }
-
-        return $airports;
-    }
-
 }
