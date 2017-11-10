@@ -3,48 +3,26 @@
 /**
  * Dummy model class that represents the airports our airline services
  */
-class Airports extends CI_Model
+class Airports extends CSV_Model
 {
-
-    // The mock airport data
-    var $data = array(
-        'KYPR' => array(
-            'code' => 'YPR',
-            'location' => 'Prince Rupert Airport'),
-        'KZMT' => array(
-            'code' => 'ZMT',
-            'location' => 'Masset Airport'),
-        'KYZP' => array(
-            'code' => 'YZP',
-            'location' => 'Sandspit Airport'),
-        'KYXT' => array(
-            'code' => 'YXT',
-            'location' => 'Terrace Airport'),
-    );
 
     // Constructor
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(APPPATH . DATA_AIRPORTS, 'id');
+    }
 
-        // inject each "record" key into the record itself, for ease of presentation
-        foreach ($this->data as $key => $record)
+    // Get all the airports in an array
+    public function allAsArray()
+    {
+        $airports = array();
+
+        foreach ($this->all() as $airport)
         {
-            $record['key'] = $key;
-            $this->data[$key] = $record;
+            $airports[$airport->id] = (array)$airport;
         }
-    }
 
-    // Get a single airplane based off its id, or null if not found
-    public function get($which)
-    {
-        return !isset($this->data[$which]) ? null : $this->data[$which];
-    }
-
-    // Get all the airports
-    public function all()
-    {
-        return $this->data;
+        return $airports;
     }
 
 }
