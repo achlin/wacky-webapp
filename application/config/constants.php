@@ -93,6 +93,22 @@ defined('DATA_FLIGHTS')             OR define('DATA_FLIGHTS', '../data/flights.c
 |--------------------------------------------------------------------------
 |
 */
+
 defined('ROLE_GUEST') OR define('ROLE_GUEST', 'Guest');
 defined('ROLE_ADMIN') OR define('ROLE_ADMIN', 'Admin');
 defined('WACKY_SERVER_URI_BASE') OR define ('WACKY_SERVER_URI_BASE', 'https://wacky.jlparry.com/info');
+
+/*
+|--------------------------------------------------------------------------
+| Wacky Urls
+|--------------------------------------------------------------------------
+|
+*/
+defined('WACKY_AIRLINES_URL')  OR define('WACKY_AIRLINES_URL', 'https://wacky.jlparry.com/info/airlines/');
+defined('WACKY_AIRPORTS_URL')  OR define('WACKY_AIRPORTS_URL', 'https://wacky.jlparry.com/info/airports/');
+defined('WACKY_AIRPLANES_URL') OR define('WACKY_AIRPLANES_URL', 'https://wacky.jlparry.com/info/airplanes/');
+defined('WACKY_REGIONS_URL')   OR define('WACKY_REGIONS_URL', 'https://wacky.jlparry.com/info/regions/');
+
+defined('DEPART_START_TIME')   OR define('DEPART_START_TIME', '08:00');
+defined('ARRIVAL_START_TIME')   OR define('ARRIVAL_END_TIME', '22:00');
+
