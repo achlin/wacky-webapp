@@ -40,14 +40,14 @@ class Flights extends Application
             $arrivesAt = $value->arrivesAt;
             $departure_airport = $airports[$departsFrom];
             $arrival_airport = $airports[$arrivesAt];
-            $details = 'From: ' . $arrival_airport->code . ' At: '
-                . $value->departureTime . "\n" . 'To: ' . $departure_airport->code
+            $details = 'From: ' . $arrival_airport->id . ' At: '
+                . $value->departureTime . "\n" . 'To: ' . $departure_airport->id
                 . ' At: ' . $value->arrivalTime;
             //Adds the items to the array that will be displayed
             array_push($this->data['flightSchedule'],
                 array('flightNo' => $key,
-                'departsFrom' => $departure_airport->location,
-                'arrivesAt' => $arrival_airport->location,
+                'departsFrom' => $departure_airport->community,
+                'arrivesAt' => $arrival_airport->community,
                 'details' => $details
             ));
         }

@@ -15,7 +15,7 @@
                     <h4 class="card-title">Serviced Airports</h4>
                     <p class="card-text">
                         {airports}
-                        {location} ({code}) <br>
+                        {community} ({id}) <br>
                         {/airports}
                     </p>
                 </div>
