@@ -5,15 +5,18 @@
  */
 class Airports extends CI_Model
 {
-    private $baseId;
-    private $codesWeService;
+    private $airlineInfo = null;
+    private function airlineInfo()
+    {
+        if ($this->airlineInfo === null)
+            $this->airlineInfo = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airlines/kite'));
+        return $this->airlineInfo;
+    }
 
     // Constructor
     public function __construct()
     {
         parent::__construct(APPPATH . DATA_AIRPORTS, 'id');
-        $this->baseId = 'YPR';
-        $this->codesWeService = ['YPR', 'ZMT', 'YZP', 'YXT'];
     }
 
     /**
@@ -21,7 +24,7 @@ class Airports extends CI_Model
      */
     public function getBaseAirportId()
     {
-        return $this->baseId;
+        return $this->airlineInfo()->base;
     }
 
     /**
@@ -30,7 +33,7 @@ class Airports extends CI_Model
     public function all()
     {
         $ret = array();
-        $allAirports = json_decode(file_get_contents('https://wacky.jlparry.com/info/airports'));
+        $allAirports = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airports'));
 
         foreach ($allAirports as $airport)
             $ret[$airport->id] = $airport;
@@ -43,7 +46,15 @@ class Airports extends CI_Model
      */
     public function airportsWeService()
     {
-        return array_filter($this->all(), function($airport) { return in_array($airport->id, $this->codesWeService); });
+        $codes = [
+            $this->airlineInfo()->base,
+            $this->airlineInfo()->dest1,
+            $this->airlineInfo()->dest2,
+            $this->airlineInfo()->dest3 ];
+
+        return array_filter($this->all(), function($a) use ($codes) {
+            return in_array($a->id, $codes);
+        });
     }
 
     /**
@@ -51,7 +62,7 @@ class Airports extends CI_Model
      */
     public function get($id)
     {
-        return json_decode(file_get_contents('https://wacky.jlparry.com/info/airports/' . $id));
+        return json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airports/' . $id));
     }
 
 }

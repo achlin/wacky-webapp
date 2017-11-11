@@ -19,7 +19,7 @@ class FleetModel extends CSV_Model
     {
         $planes = parent::all();
         $planeIds = array_column($planes, 'airplaneCode');
-        $wackyPlanes = json_decode(file_get_contents('https://wacky.jlparry.com/info/airplanes'));
+        $wackyPlanes = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airplanes'));
         $filteredPlanes = array_filter($wackyPlanes, function($p) use ($planeIds) {
             return in_array($p->id, $planeIds);
         });
@@ -28,7 +28,7 @@ class FleetModel extends CSV_Model
         {
             foreach ($planes as $plane)
             {
-                if ($plane->airplaneCode == $wackyPlane->id) 
+                if ($plane->airplaneCode == $wackyPlane->id)
                 {
                     foreach (get_object_vars($wackyPlane) as $prop => $val)
                         if (!property_exists($plane, $prop))
@@ -42,10 +42,10 @@ class FleetModel extends CSV_Model
     /**
      * Returns one plane in Lightning Air's fleet
      */
-    public function get($id, $key2)
+    public function get($id, $key2 = null)
     {
         $plane = parent::get($id, $key2);
-        $wackyPlane = json_decode(file_get_contents('https://wacky.jlparry.com/info/airplanes/' . $id));
+        $wackyPlane = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airplanes/' . $plane->airplaneCode));
 
         foreach (get_object_vars($wackyPlane) as $prop => $val)
             if (!property_exists($plane, $prop))

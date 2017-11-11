@@ -96,3 +96,4 @@ defined('DATA_FLIGHTS')             OR define('DATA_FLIGHTS', '../data/flights.c
 */
 defined('ROLE_GUEST') OR define('ROLE_GUEST', 'Guest');
 defined('ROLE_ADMIN') OR define('ROLE_ADMIN', 'Admin');
+defined('WACKY_SERVER_URI_BASE') OR define ('WACKY_SERVER_URI_BASE', 'https://wacky.jlparry.com/info');
