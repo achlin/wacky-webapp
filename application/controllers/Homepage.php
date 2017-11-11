@@ -14,10 +14,10 @@ class Homepage extends Application
         $this->data['fleetsize'] = $this->fleetModel->size();
         $this->data['flightsize'] = $this->flightsModel->size();
 
-        $baseid = 'KYPR';
-        $airports = $this->airports->all();
-        $this->data['basecode'] = $airports[$baseid]->code;
-        $this->data['baselocation'] = $airports[$baseid]->location;
+        $baseid = $this->airports->getBaseAirportId();
+        $airports = $this->airports->airportsWeService();
+        $this->data['basecode'] = $airports[$baseid]->id;
+        $this->data['baselocation'] = $airports[$baseid]->community;
         unset($airports[$baseid]);
         $this->data['airports'] = $airports;
 
