@@ -16,7 +16,7 @@ class Airports extends CI_Model
     // Constructor
     public function __construct()
     {
-        parent::__construct(APPPATH . DATA_AIRPORTS, 'id');
+        parent::__construct();
     }
 
     /**

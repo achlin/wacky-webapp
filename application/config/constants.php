@@ -84,7 +84,6 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('DATA_AIRPORTS')            OR define('DATA_AIRPORTS', '../data/airports.csv');
 defined('DATA_FLEET')               OR define('DATA_FLEET', '../data/fleet.csv');
 defined('DATA_FLIGHTS')             OR define('DATA_FLIGHTS', '../data/flights.csv');
 
