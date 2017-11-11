@@ -38,7 +38,7 @@ class PlaneModelTest extends TestCase
     public function testExistingId() {
         $plane = new PlaneModel();
         $this->expectException(Exception::class);
-        $plane->setId("Kcaravan");
+        $plane->setId("Kcaravan1");
     }
 
     public function testValidId() {
