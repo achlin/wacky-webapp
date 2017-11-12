@@ -7,13 +7,6 @@ require_once(APPPATH.'models/WackyModel.php');
 */
 class FlightModel extends CI_Model {
 
-    private $id;
-    private $departsFrom;
-    private $arrivesAt;
-    private $departureTime;
-    private $arrivalTime;
-    private $plane;
-
     /*
     * ctor
     */
@@ -22,150 +15,131 @@ class FlightModel extends CI_Model {
         parent::__construct();
     }
 
-    /*
-    * Setter for flight unique Id
-    * param $value - String representing the flight's unique id.
-    * An Id will be considered invalid and throws and exception if:
-    *   - The Id already exists in the fleet.
-    */
-    public function setId(String $value)
+    // If this class has a setProp method, use it, else modify the property directly
+    public function __set($key, $value)
     {
-        $this->load->model('flightsModel');
-        $source = $this->flightsModel->all();
-        foreach ($source as $flight) {
-            if ($flight->id === $value) {
-                throw new Exception("Flight Id already exists");
-            }
+        // if a set* method exists for this key,
+        // use that method to insert this value.
+        // For instance, setName(...) will be invoked by $object->name = ...
+        // and setLastName(...) for $object->last_name =
+        $method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+        if (method_exists($this, $method))
+        {
+                $this->$method($value);
+                return $this;
         }
-        $this->id = $value;
+
+        //otherwise validate the property
+        if (!$this->validate($key, $value)) {
+            throw new Exception('Property does not validate: ' . $key . ' => ' . $value);
+        }
+
+        // Otherwise, just set the property value directly.
+        $this->$key = $value;
+        return $this;
+    }
+
+    public function validate($key, $value)
+    {
+        $rules = $this->rules();
+        return call_user_func(array($this, $rules[$key]), $value);
+    }
+
+    // provide entity validation rules
+    public function rules()
+    {
+        $config = array(
+            'id' => 'validId',
+            'departsFrom' => 'validDepartsFrom',
+            'arrivesAt' => 'validArrivesAt',
+            'departureTime' => 'validDepartureTime',
+            'arrivalTime' => 'validArrivalTime',
+            'plane' => 'validPlane',
+        );
+        return $config;
     }
 
     /*
-    * Setter for flight departure time.
+    * Validator for flight unique Id
+    * param $value - String representing the flight's unique id.
+    * An Id will be considered invalid and returns false if:
+    *   - The Id already exists in the fleet.
+    */
+    private function validId(String $value) {
+        $this->load->model('scheduleModel');
+        $source = $this->scheduleModel->all();
+
+        $flightIds = array_column($source, 'id');
+        return !in_array($value, $flightIds);
+    }
+
+    /*
+    * Validator for flight departure time.
     * param $value - The flight's departure Time
-    * An Id will be considered invalid and throws and exception if:
+    * A departure time will be considered invalid and returns false if:
     *   - The number is not a valid time.
     *   - The time is before 8 AM
     */
-    public function setDepartureTime($value)
+    private function validDepartureTime($value)
     {
         $startTime = DateTime::createFromFormat('H:i', DEPART_START_TIME);
         $departTime = DateTime::createFromFormat('H:i', $value);
-        if(!$departTime) {
-            throw new Exception("Invalid Date");
-        }
-        if ($departTime < $startTime) {
-            throw new Exception("Departure Times can not be set before 0800");
-        }
-        $this->departureTime = $value;
+        return $departTime && $departTime > $startTime;
     }
 
     /*
-    * Setter for flight arrival time.
+    * Validator for flight arrival time.
     * param $value - The flight's arrival Time
-    * An arrival time will be considered invalid and throws and exception if:
+    * An arrival time will be considered invalid and returns false if:
     *   - The number is not a valid time.
     *   - The time is after 10 PM
     */
-    public function setArrivalTime($value)
+    private function validArrivalTime($value)
     {
         $endTime = DateTime::createFromFormat('H:i', ARRIVAL_END_TIME);
         $arrivalTime = DateTime::createFromFormat('H:i', $value);
-        if(!$arrivalTime) {
-            throw new Exception("Invalid Date");
-        }
-        if ($arrivalTime > $endTime) {
-            throw new Exception("Arrival Times can not be set after 2200");
-        }
-        $this->arrivalTime = $value;
+        return $arrivalTime && $arrivalTime < $endTime;
     }
 
     /*
-    * Setter for flight departure airport.
+    * Validator for flight departure airport.
     * param $value - The flight's departure Time
-    * An airport code will be considered invalid and throws and exception if:
+    * An airport code will be considered invalid and returns false if:
     *   - The departure airport code does not exist
     */
-    public function setDepartsFrom($value)
+    private function validDepartsFrom($value)
     {
         $wackyModel = new WackyModel();
         $airport = $wackyModel->getAirport($value);
-        if (!$airport || $airport === 'null') {
-            throw new Exception("Departure Airport not found");
-        }
-        $this->departsFrom = $value;
+        return $airport && $airport !== 'null';
     }
 
     /*
-    * Setter for flight arrival airport.
+    * Validator for flight arrival airport.
     * param $value - The flight's arrival Time
-    * An airport code will be considered invalid and throws and exception if:
+    * An airport code will be considered invalid and returns false if:
     *   - The arrival airport code does not exist
     */
-    public function setArrivesAt($value)
+    private function validArrivesAt($value)
     {
         $wackyModel = new WackyModel();
         $airport = $wackyModel->getAirport($value);
-        if (!$airport || $airport === 'null') {
-            throw new Exception("Arrival Airport not found");
-        }
-        $this->arrivesAt = $value;
+        return $airport && $airport !== 'null';
     }
 
     /*
-    * Setter for the plane.
+    * Validator for plane.
+    * param $value - The flight's plane
+    * A plane will be considered invalid and returns false if:
+    *   - The plane does not exist in our fleet
     */
-    public function setPlane($value)
+    private function validPlane($value)
     {
-        $this->plane = $value;
+        $this->load->model('fleetModel');
+        $fleet = $this->fleetModel->all();
+        $planeIds = array_column($fleet, 'id');
+        return in_array($value, $planeIds);
     }
 
-    /*
-    * Getter for Id.
-    */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /*
-    * Getter for departsFrom.
-    */
-    public function getDepartsFrom()
-    {
-        return $this->departsFrom;
-    }
-
-    /*
-    * Getter for arrivesAt.
-    */
-    public function getArrivesAt()
-    {
-        return $this->arrivesAt;
-    }
-
-    /*
-    * Getter for departureTime.
-    */
-    public function getDepartureTime()
-    {
-        return $this->departureTime;
-    }
-
-    /*
-    * Getter for arrivalTime.
-    */
-    public function getArrivalTime()
-    {
-        return $this->arrivalTime;
-    }
-
-    /*
-    * Getter for plane.
-    */
-    public function getPlane()
-    {
-        return $this->plane;
-    }
 
 }
