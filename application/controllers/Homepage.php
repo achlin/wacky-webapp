@@ -12,7 +12,7 @@ class Homepage extends Application
     {
         $this->data['pagebody'] = 'homepage';
         $this->data['fleetsize'] = $this->fleetModel->size();
-        $this->data['flightsize'] = $this->flightsModel->size();
+        $this->data['flightsize'] = $this->scheduleModel->size();
 
         $baseid = $this->airports->getBaseAirportId();
         $airports = $this->airports->airportsWeService();

@@ -17,71 +17,84 @@ class FlightModelTest extends TestCase
     public function testLateArrival() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setArrivalTime(2300);
+        $flight->arrivalTime = 2300;
     }
 
     public function testValidArrivalTime() {
         $flight = new FlightModel();
         $validTime = "15:00";
-        $flight->setArrivalTime($validTime);
-        $this->assertEquals($validTime, $flight->getArrivalTime());
+        $flight->arrivalTime = $validTime;
+        $this->assertEquals($validTime, $flight->arrivalTime);
     }
 
     public function testValidDepartureTime() {
         $flight = new FlightModel();
         $validTime = "15:00";
-        $flight->setDepartureTime($validTime);
-        $this->assertEquals($validTime, $flight->getDepartureTime());
+        $flight->departureTime = $validTime;
+        $this->assertEquals($validTime, $flight->departureTime);
     }
 
     public function testInvalidArrival() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setArrivalTime(1588);
+        $flight->arrivalTime = 1588;
     }
 
     public function testEarlyDeparture() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setDepartureTime(0600);
+        $flight->departureTime = 0600;
     }
 
     public function testInvalidDeparture() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setDepartureTime(1588);
+        $flight->departureTime = 1588;
     }
 
     public function testInvalidArrivalAirport() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setArrivesAt("NotValidId");
+        $flight->arrivesAt = "NotValidId";
     }
 
     public function testInvalidDepartureAirport() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setDepartsFrom("NotValidId");
+        $flight->departsFrom ="NotValidId";
     }
 
     public function testValidArrivalAirport() {
         $flight = new FlightModel();
         $validCode = 'XQU';
-        $flight->setArrivesAt($validCode);
-        $this->assertEquals($validCode, $flight->getArrivesAt());
+        $flight->arrivesAt = $validCode;
+        $this->assertEquals($validCode, $flight->arrivesAt);
     }
 
-    public function testValidDeparturelAirport() {
+    public function testValidDepartureAirport() {
         $flight = new FlightModel();
         $validCode = 'XQU';
-        $flight->setDepartsFrom($validCode);
-        $this->assertEquals($validCode, $flight->getDepartsFrom());
+        $flight->departsFrom = $validCode;
+        $this->assertEquals($validCode, $flight->departsFrom);
     }
 
     public function testExistingId() {
         $flight = new FlightModel();
         $this->expectException(Exception::class);
-        $flight->setId('KYPRZMT');
+        $flight->id = 'KYPRZMT';
+    }
+
+    public function testValidPlane() {
+        $flight = new FlightModel();
+        $validPlane = 'Kcaravan1';
+        $flight->plane = $validPlane;
+        $this->assertEquals($validPlane, $flight->plane);
+    }
+
+    public function testInvalidPlane() {
+        $flight = new FlightModel();
+        $this->expectException(Exception::class);
+        $flight->plane = 'BLIMP';
     }
 
 }

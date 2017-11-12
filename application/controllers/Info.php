@@ -13,7 +13,7 @@ class Info extends Application
      */
     public function flights()
     {
-        $record = $this->flightsModel->all();
+        $record = $this->scheduleModel->all();
         header("Content-type: application/json");
         echo json_encode($record);
     }
