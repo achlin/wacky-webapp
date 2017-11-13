@@ -1,6 +1,5 @@
 id,departsFrom,arrivesAt,departureTime,arrivalTime,plane
 KYPRYXT1,YPR,YXT,08:00,09:00,Kpc12ng1
-KYPRYXT14,ZMT,YPR,10:00,09:01,Kkingair1,Save
 KYPRYXT2,YPR,YXT,18:00,19:00,Kpc12ng1
 KYPRYZP,YPR,YZP,09:00,10:00,Kkingair1
 KYPRZMT,YPR,ZMT,08:00,09:00,Kcaravan1

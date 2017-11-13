@@ -29,7 +29,7 @@
                 </tr>
                 <tr>
                     <td>{zsubmit}<td>
-                    <td><a href="/flights/cancel"><input type="button" value="Cancel"/></td>
+                    <td><a href="/flights/cancel"><input type="button" value="Cancel"/></a></td>
                 </tr>
         </table>
     </form>

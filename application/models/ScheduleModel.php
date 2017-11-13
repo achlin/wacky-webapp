@@ -76,7 +76,6 @@ class ScheduleModel extends CSV_Model
         $lowVisitAirports = array_filter($airportIds, function($id) use ($arrivalCount) {
             return !array_key_exists($id, $arrivalCount) || $arrivalCount[$id] < 2;
         });
-        echo 'validNetworkVisits: ' . empty($lowVisitAirports);
         return empty($lowVisitAirports);
     }
 

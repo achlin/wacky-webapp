@@ -69,6 +69,27 @@ class Flights extends Application
         $this->render();
     }
 
+    public function add() {
+        $this->load->helper('form');
+        // if no errors, pass an empty message
+        if ( ! isset($this->data['error']))
+            $this->data['error'] = '';
+
+        $fields = array(
+            'fid'           => form_input('id'),
+            'fdepartsFrom'  => form_dropdown('departsFrom', $this->loadAvailableAirports()),
+            'farrivesAt'    => form_dropdown('arrivesAt', $this->loadAvailableAirports()),
+            'fdepartureTime'=> form_input('departureTime'),
+            'farrivalTime'  => form_input('arrivalTime'),
+            'fplane'        => form_dropdown('plane', $this->loadAvailablePlanes()),
+            'zsubmit'       => form_submit('submit', 'Save'),
+        );
+        $this->data = array_merge($this->data, $fields);
+
+        $this->data['pagebody'] = 'flightedit';
+        $this->render();
+    }
+
     private function editFlight() {
         $this->load->helper('form');
         $flight = $this->session->userdata("flight");
@@ -99,16 +120,19 @@ class Flights extends Application
         $newFlight = new FlightModel();
 
         try {
+
+            $existingFlight = $this->scheduleModel->get($flight->id);
+            if($existingFlight === null)
+                $newFlight->__set('id', $flight->id);
             $newFlight->__set('departsFrom', $flight->departsFrom);
             $newFlight->__set('arrivesAt', $flight->arrivesAt);
             $newFlight->__set('departureTime', $flight->departureTime);
             $newFlight->__set('arrivalTime', $flight->arrivalTime);
             $newFlight->__set('plane', $flight->plane);
 
-            $existingFlight = $this->scheduleModel->get($flight->id);
             if ($existingFlight === null) {
                 //New flight
-                $newFlight->__set('id', $flight->id);
+
                 $this->scheduleModel->addFlight($newFlight);
                 $this->alert('Flight ' . $flight->id . ' added', 'success');
             } else {
