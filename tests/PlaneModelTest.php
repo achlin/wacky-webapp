@@ -14,8 +14,7 @@ class PlaneModelTest extends TestCase
     }
    /*   - The Id contains non-alphanumeric characters
     *   - The Id is an empty String
-    *   - The Id does not start with 'k' or 'K'
-    *   - The Id already exists in the fleet.*/
+    *   - The Id does not start with 'k' or 'K' */
 
     public function testNonAlphaNumericId() {
         $plane = new PlaneModel();
@@ -33,12 +32,6 @@ class PlaneModelTest extends TestCase
         $plane = new PlaneModel();
         $this->expectException(Exception::class);
         $plane->setId("Y123");
-    }
-
-    public function testExistingId() {
-        $plane = new PlaneModel();
-        $this->expectException(Exception::class);
-        $plane->setId("Kcaravan1");
     }
 
     public function testValidId() {
