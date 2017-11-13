@@ -32,6 +32,7 @@ class Flights extends Application
     private function loadFlightSchedule() {
         $flights =  $this->scheduleModel->all();
         $airports = $this->airports->all();
+        $role = $this->session->userdata("userrole");
         $result = '';
 
         foreach($flights as $flight) {
@@ -45,6 +46,10 @@ class Flights extends Application
             $flight->details = $details;
             $result .= $this->parser->parse('flightrow', (array) $flight, true);
         }
+        if ($role === ROLE_ADMIN)
+            $this->data['add_flight'] = $this->parser->parse('addflight', (array) $flight, true);
+        else
+            $this->data['add_flight'] ='';
         $this->data['display_flights'] = $result;
     }
 

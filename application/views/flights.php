@@ -11,5 +11,5 @@
             {display_flights}
         </tbody>
     </table>
-    <a href="/flights/add"><input type="button" value="Add..."/>
+    {add_flight}
 </div>
