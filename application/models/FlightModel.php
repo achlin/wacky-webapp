@@ -84,7 +84,7 @@ class FlightModel extends CI_Model {
     {
         $startTime = DateTime::createFromFormat('H:i', DEPART_START_TIME);
         $departTime = DateTime::createFromFormat('H:i', $value);
-        return $departTime && $departTime > $startTime;
+        return $departTime && $departTime >= $startTime;
     }
 
     /*
@@ -98,7 +98,7 @@ class FlightModel extends CI_Model {
     {
         $endTime = DateTime::createFromFormat('H:i', ARRIVAL_END_TIME);
         $arrivalTime = DateTime::createFromFormat('H:i', $value);
-        return $arrivalTime && $arrivalTime < $endTime;
+        return $arrivalTime && $arrivalTime <= $endTime;
     }
 
     /*

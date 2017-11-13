@@ -76,7 +76,7 @@ class ScheduleModel extends CSV_Model
         $lowVisitAirports = array_filter($airportIds, function($id) use ($arrivalCount) {
             return !array_key_exists($id, $arrivalCount) || $arrivalCount[$id] < 2;
         });
-
+        echo 'validNetworkVisits: ' . empty($lowVisitAirports);
         return empty($lowVisitAirports);
     }
 
@@ -98,8 +98,20 @@ class ScheduleModel extends CSV_Model
                 $baseCount++;
             }
         }
-
         return $baseCount >= 0;
     }
 
+    public function addFlight($flight) {
+        if($this->validSchedule($flight))
+            $this->scheduleModel->add($flight);
+        else
+            throw new Exception("Flight causes invalid schedule");
+    }
+
+    public function updateFlight($flight) {
+        if($this->validSchedule($flight))
+            $this->update($flight);
+        else
+            throw new Exception("Flight causes invalid schedule");
+    }
 }

@@ -8,13 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            {flightSchedule}
-                <tr title="{details}">
-                    <td>{flightNo}</td>
-                    <td>{departsFrom}</td>
-                    <td>{arrivesAt}</td>
-                </tr>
-            {/flightSchedule}
+            {display_flights}
         </tbody>
     </table>
 </div>
