@@ -18,7 +18,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirlines()
     {
-        $response = file_get_contents(WACKY_AIRLINES_URL);
+        $response = json_decode(file_get_contents(WACKY_AIRLINES_URL));
     }
 
     /*
@@ -26,7 +26,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirports()
     {
-        $response = file_get_contents(WACKY_AIRPORTS_URL);
+        $response = json_decode(file_get_contents(WACKY_AIRPORTS_URL));
         return $response;
     }
 
@@ -35,7 +35,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirplanes()
     {
-        $response = file_get_contents(WACKY_AIRPLANES_URL);
+        $response = json_decode(file_get_contents(WACKY_AIRPLANES_URL));
         return $response;
     }
 
@@ -44,7 +44,7 @@ class WackyModel extends CI_Model {
     */
     public function getRegions()
     {
-        $response = file_get_contents(WACKY_REGIONS_URL);
+        $response = json_decode(file_get_contents(WACKY_REGIONS_URL));
         return $response;
     }
 
@@ -54,7 +54,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirline(String $id)
     {
-        $response = file_get_contents(WACKY_AIRLINES_URL . $id);
+        $response = json_decode(file_get_contents(WACKY_AIRLINES_URL . $id));
     }
 
     /*
@@ -63,7 +63,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirport(String $id)
     {
-        $response = file_get_contents(WACKY_AIRPORTS_URL . $id);
+        $response = json_decode(file_get_contents(WACKY_AIRPORTS_URL . $id));
         return $response;
     }
 
@@ -73,7 +73,7 @@ class WackyModel extends CI_Model {
     */
     public function getAirplane(String $id)
     {
-        $response = file_get_contents(WACKY_AIRPLANES_URL . $id);
+        $response = json_decode(file_get_contents(WACKY_AIRPLANES_URL . $id));
         return $response;
     }
 
@@ -83,7 +83,7 @@ class WackyModel extends CI_Model {
     */
     public function getRegion(String $id)
     {
-        $response = file_get_contents(WACKY_REGIONS_URL . $id);
+        $response = json_decode(file_get_contents(WACKY_REGIONS_URL . $id));
         return $response;
     }
 }
