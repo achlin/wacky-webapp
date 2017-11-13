@@ -25,8 +25,6 @@ class FleetModel extends CSV_Model
             return in_array($p->id, $planeIds);
         });
 
-        $fleet = array();
-
         foreach ($filteredPlanes as $wackyPlane)
         {
             foreach ($planes as $plane)
@@ -39,7 +37,6 @@ class FleetModel extends CSV_Model
                 }
             }
         }
-
         return $planes;
     }
 
