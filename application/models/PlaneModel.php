@@ -10,9 +10,11 @@ class PlaneModel extends CI_Model {
     /*
     * ctor
     */
-    public function __construct()
+    public function __construct($id = 'Kid', $code ='')
     {
         parent::__construct();
+        $this->id = $id;
+        $this->airplaneCode = $code;
     }
 
     // If this class has a setProp method, use it, else modify the property directly
@@ -41,7 +43,6 @@ class PlaneModel extends CI_Model {
     *   - The Id contains non-alphanumeric characters
     *   - The Id is an empty String
     *   - The Id does not start with 'k' or 'K'
-    *   - The Id already exists in the fleet.
     */
     public function setId(String $value)
     {
@@ -56,13 +57,7 @@ class PlaneModel extends CI_Model {
         if($value[0] != 'k' && $value[0] != 'K') {
             throw new Exception("Airplane ID must start with 'k' or 'K'");
         }
-        $this->load->model("fleetModel");
-        $source = $this->fleetModel->all();
-        foreach($source as $plane) {
-            if ($plane->id === $value) {
-                throw new Exception("Airplane ID already exists");
-            }
-        }
+
         $this->id = $value;
     }
 
@@ -76,11 +71,19 @@ class PlaneModel extends CI_Model {
     public function setAirplaneCode(String $value)
     {
         $wackyModel = new WackyModel();
-        $plane = $wackyModel.getAirplane($value);
+        $plane = $wackyModel->getAirplane($value);
         if(!$plane || $plane === 'null') {
-            throw new Exception("Airplane Code not found");
+            throw new Exception("Airplane Code not found: " . $value);
         }
-        $this->airplaneCode = value;
+        $this->airplaneCode = $value;
+    }
+
+    /**
+     * Creates a plane model
+     */
+    public function create($id = 'kId', $ac = '')
+    {
+        return new PlaneModel($id, $ac);
     }
 
     /*
