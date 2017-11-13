@@ -1,5 +1,5 @@
 <div class="row">
-    <table class="table table-striped table-inverse" id="fleetTable">
+    <table class="table table-striped table-dark" id="fleetTable">
         <thead>
             <tr>
                 <th>ID</th>
@@ -11,7 +11,8 @@
             {fleet}
             <tr>
                 <td>
-                    <a href="/fleet/show/{key}">{key}</a>
+                    <a href="/fleet/show/{id}">{id}</a>
+                    {editLink}
                 </td>
                 <td>
                     {manufacturer}
@@ -21,6 +22,7 @@
                 </td>
             </tr>
             {/fleet}
+            {addLink}
         </tbody>
     </table>
 </div>

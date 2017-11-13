@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('parser');
+$autoload['libraries'] = array('parser','session');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('fleetModel', 'flightsModel', 'airports');
+$autoload['model'] = array('fleetModel', 'scheduleModel', 'airports', 'wackyModel', 'planeModel', 'flightModel');

@@ -8,7 +8,8 @@ if (!defined('APPPATH'))
         <title>{pagetitle}</title>
         <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
         <link rel="stylesheet" type="text/css" href="/assets/css/style.css"/>
     </head>
     <body>
@@ -24,7 +25,6 @@ if (!defined('APPPATH'))
         <div class="container">
             <div id="title">
                 <h1 class="my-4">{pagetitle}
-                    <br/>
                     <small>We'll get you there in a flash!</small>
                 </h1>
             </div>
@@ -35,7 +35,10 @@ if (!defined('APPPATH'))
                 <p class="m-0 text-center">{footer}</p>
             </div>
         </footer>
-        <script src="/assets/js/jquery.min.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <script type="text/javascript" src="/assets/js/scripts.js"></script>
     </body>
 </html>

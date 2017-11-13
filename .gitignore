@@ -5,3 +5,6 @@
 !*/cache/index.html
 !*/cache/.htaccess
 /nbproject/private/
+tmp/*
+/vendor/*
+tests/report/*
