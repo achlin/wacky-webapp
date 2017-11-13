@@ -7,23 +7,31 @@ require_once(APPPATH.'models/WackyModel.php');
 */
 class PlaneModel extends CI_Model {
 
-    private $id;
-    private $airplaneCode;
-    private $manufacturer;
-    private $model;
-    private $price;
-    private $seats;
-    private $reach;
-    private $cruise;
-    private $takeoff;
-    private $hourly;
-
     /*
     * ctor
     */
     public function __construct()
     {
         parent::__construct();
+    }
+
+    // If this class has a setProp method, use it, else modify the property directly
+    public function __set($key, $value)
+    {
+        // if a set* method exists for this key,
+        // use that method to insert this value.
+        // For instance, setName(...) will be invoked by $object->name = ...
+        // and setLastName(...) for $object->last_name =
+        $method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+        if (method_exists($this, $method))
+        {
+                $this->$method($value);
+                return $this;
+        }
+
+        // Otherwise, just set the property value directly.
+        $this->$key = $value;
+        return $this;
     }
 
     /*
@@ -51,7 +59,7 @@ class PlaneModel extends CI_Model {
         $this->load->model("fleetModel");
         $source = $this->fleetModel->all();
         foreach($source as $plane) {
-            if ($plane->id === $value) {
+            if ($plane[id] === $value) {
                 throw new Exception("Airplane ID already exists");
             }
         }
@@ -72,25 +80,7 @@ class PlaneModel extends CI_Model {
         if(!$plane || $plane === 'null') {
             throw new Exception("Airplane Code not found");
         }
-        parsePlaneJson($plane);
         $this->airplaneCode = value;
-    }
-
-    /*
-    * Takes the json string returned from the wacky servers and converts it into
-    * a php object.  Assigns the rest of the values to the plane properties.
-    */
-    private function parsePlaneJson($result)
-    {
-        $plane = json_decode($result);
-        $this->manufacturer=$plane->manufacturer;
-        $this->model=$plane->model;
-        $this->price=$plane->price;
-        $this->seats=$plane->seats;
-        $this->reach=$plane->reach;
-        $this->cruise=$plane->cruise;
-        $this->takeoff=$plane->takeoff;
-        $this->hourly=$plane->hourly;
     }
 
     /*

@@ -19,10 +19,13 @@ class FleetModel extends CSV_Model
     {
         $planes = parent::all();
         $planeIds = array_column($planes, 'airplaneCode');
-        $wackyPlanes = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airplanes'));
+        $wackyPlanes = $this->wackyModel->getAirplanes();
+
         $filteredPlanes = array_filter($wackyPlanes, function($p) use ($planeIds) {
             return in_array($p->id, $planeIds);
         });
+
+        $fleet = array();
 
         foreach ($filteredPlanes as $wackyPlane)
         {
@@ -30,13 +33,17 @@ class FleetModel extends CSV_Model
             {
                 if ($plane->airplaneCode == $wackyPlane->id)
                 {
-                    foreach (get_object_vars($wackyPlane) as $prop => $val)
-                        if (!property_exists($plane, $prop))
-                            $plane->$prop = $val;
+                    $tempPlane = array();
+                    $tempPlane['id']           = $plane->id;
+                    $tempPlane['key']          = $plane->airplaneCode;
+                    $tempPlane['model']        = $wackyPlane->model;
+                    $tempPlane['manufacturer'] = $wackyPlane->manufacturer;
+                    array_push($fleet, $tempPlane);
                 }
             }
         }
-        return $planes;
+
+        return $fleet;
     }
 
     /**
@@ -45,12 +52,33 @@ class FleetModel extends CSV_Model
     public function get($id, $key2 = null)
     {
         $plane = parent::get($id, $key2);
-        $wackyPlane = json_decode(file_get_contents(WACKY_SERVER_URI_BASE . '/airplanes/' . $plane->airplaneCode));
-
-        foreach (get_object_vars($wackyPlane) as $prop => $val)
-            if (!property_exists($plane, $prop))
-                $plane->$prop = $val;
-
-        return $plane;
+        $wackyPlane = $this->wackyModel->getAirplane($plane->airplaneCode);
+        $wackyPlane->id = $id;
+        return $wackyPlane;
     }
+
+    public function validFleet($plane) {
+        return $this->validBudget($plane);
+    }
+
+    /*
+    * Validator for the planes in the fleet.
+    * param $fleet - Array representing the airline's fleet
+    * A fleet will be considered invalid and returns false if:
+    *   - The sum of the cost the planes in the fleet is overbudget (10 million)
+    */
+    public function validBudget($plane) {
+        $fleet = $this->all();
+        $fleetPrice = 0;
+
+        foreach($fleet as $kitePlane)
+        {
+            $wackyPlane = $this->wackyModel->getAirplane($kitePlane[key]);
+            $fleetPrice += $wackyPlane->price;
+        }
+        $fleetPrice += $plane->price;
+        
+        return $fleetPrice <= 10000;
+    }
+
 }
