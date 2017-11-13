@@ -59,7 +59,7 @@ class PlaneModel extends CI_Model {
         $this->load->model("fleetModel");
         $source = $this->fleetModel->all();
         foreach($source as $plane) {
-            if ($plane[id] === $value) {
+            if ($plane->id === $value) {
                 throw new Exception("Airplane ID already exists");
             }
         }

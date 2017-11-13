@@ -33,17 +33,14 @@ class FleetModel extends CSV_Model
             {
                 if ($plane->airplaneCode == $wackyPlane->id)
                 {
-                    $tempPlane = array();
-                    $tempPlane['id']           = $plane->id;
-                    $tempPlane['key']          = $plane->airplaneCode;
-                    $tempPlane['model']        = $wackyPlane->model;
-                    $tempPlane['manufacturer'] = $wackyPlane->manufacturer;
-                    array_push($fleet, $tempPlane);
+                    foreach (get_object_vars($wackyPlane) as $prop => $val)
+                        if (!property_exists($plane, $prop))
+                            $plane->$prop = $val;
                 }
             }
         }
 
-        return $fleet;
+        return $planes;
     }
 
     /**
@@ -53,8 +50,12 @@ class FleetModel extends CSV_Model
     {
         $plane = parent::get($id, $key2);
         $wackyPlane = $this->wackyModel->getAirplane($plane->airplaneCode);
-        $wackyPlane->id = $id;
-        return $wackyPlane;
+
+        foreach (get_object_vars($wackyPlane) as $prop => $val)
+            if (!property_exists($plane, $prop))
+                $plane->$prop = $val;
+
+        return $plane;
     }
 
     public function validFleet($plane) {
@@ -73,11 +74,10 @@ class FleetModel extends CSV_Model
 
         foreach($fleet as $kitePlane)
         {
-            $wackyPlane = $this->wackyModel->getAirplane($kitePlane[key]);
-            $fleetPrice += $wackyPlane->price;
+            $fleetPrice += $kitePlane->price;
         }
         $fleetPrice += $plane->price;
-        
+
         return $fleetPrice <= 10000;
     }
 
