@@ -10,13 +10,6 @@
         <tbody>
             {display_flights}
         </tbody>
-        <tbody>
-            <tr>
-                <td colspan="3" align="right">
-                    {add_flight}
-                </td>
-            </tr>
-        </tbody>
+        {add_flight}
     </table>
-
 </div>
