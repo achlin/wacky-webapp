@@ -58,10 +58,9 @@ class Flights extends Application
             redirect('/flights');
         $role = $this->session->userdata("userrole");
         $flight = $this->scheduleModel->get($id);
-        echo $flight->id;
         $this->session->set_userdata('flight', $flight);
         if($role === ROLE_ADMIN)
-            $this->editFlight($id);
+            $this->editFlight();
         else
             $this->displayFlight($flight);
 
@@ -75,19 +74,23 @@ class Flights extends Application
     }
 
     public function add() {
+        $role = $this->session->userdata('userrole');
+        if ($role != ROLE_ADMIN)
+            redirect('/fleet');
+
         $this->load->helper('form');
         // if no errors, pass an empty message
         if ( ! isset($this->data['error']))
             $this->data['error'] = '';
 
         $fields = array(
-            'fid'           => form_input('id'),
-            'fdepartsFrom'  => form_dropdown('departsFrom', $this->loadAvailableAirports()),
-            'farrivesAt'    => form_dropdown('arrivesAt', $this->loadAvailableAirports()),
-            'fdepartureTime'=> form_input('departureTime'),
-            'farrivalTime'  => form_input('arrivalTime'),
-            'fplane'        => form_dropdown('plane', $this->loadAvailablePlanes()),
-            'zsubmit'       => form_submit('submit', 'Save'),
+            'fid'           => form_input('id', '', 'class="form-control form-control-sm"'),
+            'fdepartsFrom'  => form_dropdown('departsFrom', $this->loadAvailableAirports(), '', 'class="form-control form-control-sm"'),
+            'farrivesAt'    => form_dropdown('arrivesAt', $this->loadAvailableAirports(), '', 'class="form-control form-control-sm"'),
+            'fdepartureTime'=> form_input('departureTime', '', 'class="form-control form-control-sm"'),
+            'farrivalTime'  => form_input('arrivalTime', '', 'class="form-control form-control-sm"'),
+            'fplane'        => form_dropdown('plane', $this->loadAvailablePlanes(), '', 'class="form-control form-control-sm"'),
+            'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);
 
@@ -96,6 +99,10 @@ class Flights extends Application
     }
 
     private function editFlight() {
+        $role = $this->session->userdata('userrole');
+        if ($role != ROLE_ADMIN)
+            redirect('/flights');
+
         $this->load->helper('form');
         $flight = $this->session->userdata("flight");
         // if no errors, pass an empty message
@@ -103,13 +110,13 @@ class Flights extends Application
             $this->data['error'] = '';
 
         $fields = array(
-            'fid'           => form_input('id', $flight->id),
-            'fdepartsFrom'  => form_dropdown('departsFrom', $this->loadAvailableAirports(), $flight->departsFrom),
-            'farrivesAt'    => form_dropdown('arrivesAt', $this->loadAvailableAirports(), $flight->arrivesAt),
-            'fdepartureTime'=> form_input('departureTime', $flight->departureTime),
-            'farrivalTime'  => form_input('arrivalTime', $flight->arrivalTime),
-            'fplane'        => form_dropdown('plane', $this->loadAvailablePlanes(), $flight->plane),
-            'zsubmit'       => form_submit('submit', 'Save'),
+            'fid'           => form_input('id', $flight->id, 'class="form-control form-control-sm"'),
+            'fdepartsFrom'  => form_dropdown('departsFrom', $this->loadAvailableAirports(), $flight->departsFrom, 'class="form-control form-control-sm"'),
+            'farrivesAt'    => form_dropdown('arrivesAt', $this->loadAvailableAirports(), $flight->arrivesAt, 'class="form-control form-control-sm"'),
+            'fdepartureTime'=> form_input('departureTime', $flight->departureTime, 'class="form-control form-control-sm"'),
+            'farrivalTime'  => form_input('arrivalTime', $flight->arrivalTime, 'class="form-control form-control-sm"'),
+            'fplane'        => form_dropdown('plane', $this->loadAvailablePlanes(), $flight->plane, 'class="form-control form-control-sm"'),
+            'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);
 
@@ -128,16 +135,16 @@ class Flights extends Application
 
             $existingFlight = $this->scheduleModel->get($flight->id);
             if($existingFlight === null)
-                $newFlight->__set('id', $flight->id);
-            $newFlight->__set('departsFrom', $flight->departsFrom);
-            $newFlight->__set('arrivesAt', $flight->arrivesAt);
-            $newFlight->__set('departureTime', $flight->departureTime);
-            $newFlight->__set('arrivalTime', $flight->arrivalTime);
-            $newFlight->__set('plane', $flight->plane);
+                $newFlight->id = $flight->id;
+
+            $newFlight->departsFrom = $flight->departsFrom;
+            $newFlight->arrivesAt = $flight->arrivesAt;
+            $newFlight->departureTime = $flight->departureTime;
+            $newFlight->arrivalTime = $flight->arrivalTime;
+            $newFlight->plane = $flight->plane;
 
             if ($existingFlight === null) {
                 //New flight
-
                 $this->scheduleModel->addFlight($newFlight);
                 $this->alert('Flight ' . $flight->id . ' added', 'success');
             } else {
@@ -146,7 +153,7 @@ class Flights extends Application
                 $this->alert('Flight ' . $flight->id . ' updated', 'success');
             }
         } catch (Exception $e) {
-            $this->alert('<strong>Validation errors!<strong><br>' . $e->getMessage(), 'danger');
+            $this->alert('<strong>Validation errors!</strong><br>' . $e->getMessage(), 'danger');
         }
         $this->editFlight();
     }
@@ -169,7 +176,7 @@ class Flights extends Application
 
     private function alert($message) {
         $this->load->helper('html');
-        $this->data['error'] = heading($message,3);
+        $this->data['error'] = $message;
     }
 
     public function cancel() {

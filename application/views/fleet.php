@@ -12,7 +12,6 @@
             <tr>
                 <td>
                     <a href="/fleet/show/{id}">{id}</a>
-                    {editLink}
                 </td>
                 <td>
                     {manufacturer}
@@ -21,8 +20,16 @@
                     {model}
                 </td>
             </tr>
+
             {/fleet}
-            {addLink}
+        </tbody>
+        <tbody>
+            <tr>
+                <td colspan="3" align="right">
+                    {addLink}
+                </td>
+            </tr>
         </tbody>
     </table>
+
 </div>
