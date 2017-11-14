@@ -1,6 +1,6 @@
-{error}
+<h5 class="text-danger">{error}</h5>
 <div class="row">
-    <form role="form" action="/flights/submit" method="post">
+    <form class="container" role="form" action="/flights/submit" method="post">
         <table class="table table-striped table-dark">
             <tbody>
                 <tr>
@@ -27,10 +27,12 @@
                     <td>Plane:</td>
                     <td>{fplane}</td>
                 </tr>
+            </tbody>
+            <tbody>
                 <tr>
-                    <td>{zsubmit}<td>
-                    <td><a href="/flights/cancel"><input type="button" value="Cancel"/></a></td>
+                    <td colspan="2" align="right">{zsubmit}<a href="/flights/cancel"><input type="button" class="btn btn-light" value="Cancel"/></a></td>
                 </tr>
+            </tbody>
         </table>
     </form>
 </div>

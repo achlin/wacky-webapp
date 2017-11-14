@@ -21,29 +21,40 @@ class Fleet extends Application
         $source = $this->fleetModel->all();
 
         $role = $this->session->userdata('userrole');
-        foreach ($source as $plane) {
-            if ($role == ROLE_ADMIN) {
-                $plane->editLink = ' - <a href="/fleet/edit/' . $plane->id . '">Edit</a>';
-            } else {
-                $plane->editLink = '';
-            }
-        }
+
         $this->data['fleet'] = $source;
-        $this->data['addLink'] = ($role == ROLE_ADMIN) ? '<a href="/fleet/add">Add new..</a>' : '';
+        $this->data['addLink'] = ($role == ROLE_ADMIN) ? '<a href="/fleet/add"><input type="button" class="btn btn-primary" value="Add new.."/></a>' : '';
         $this->render();
+    }
+
+    public function getPlane() {
+        $get = $this->input->post();
+        $response = $this->wackyModel->getAirplane($get['airplaneCode']);
+        header("Content-type: application/json");
+        echo json_encode($response);
     }
 
     /**
     * Changes the view to that of a single plane.  Adds the plane's information
     * to the available data.
     */
-    public function show($id) {
+    public function show($id = null) {
+        if($id === null)
+            redirect('/flights');
 
-        $this->data['pagebody'] = 'plane';
+        $role = $this->session->userdata('userrole');
 
+        if($role === ROLE_ADMIN)
+            $this->edit($id);
+        else
+            $this->displayPlane($id);
+    }
+
+    private function displayPlane($id) {
         $source = $this->fleetModel->get($id);
         $this->data = array_merge($this->data, (array) $source);
 
+        $this->data['pagebody'] = 'plane';
         $this->render();
     }
 
@@ -58,7 +69,6 @@ class Fleet extends Application
         $plane = $this->fleetModel->getDTO($id);
 
         $this->load->helper('form');
-        $this->data['id'] = $plane->id;
 
         // if no errors, pass an empty message
         if ( ! isset($this->data['error']))
@@ -69,12 +79,14 @@ class Fleet extends Application
         $index = array_search($plane->airplaneCode, $airplaneCodes);
 
         $fields = array(
-            'id'      => form_label('Plane ID') . form_input('id', $plane->id, 'readonly'),
-            'airplaneCode' => form_label('Airplane Code') . form_dropdown('airplaneCode', $airplaneCodes, $index),
+            'fid'      => form_input('id', $plane->id, 'class="form-control form-control-sm" readonly'),
+            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="planeCodeSelect" class="form-control form-control-sm"'),
+            'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);
 
-        $this->data['pagebody'] = 'editPlane';
+        $this->data['action'] = '/flights/submit';
+        $this->data['pagebody'] = 'editplane';
         $this->render();
     }
 
@@ -143,12 +155,17 @@ class Fleet extends Application
         $index = array_search($plane->airplaneCode, $airplaneCodes);
 
         $fields = array(
-            'id'      => form_label('Plane ID') . form_input('id', $plane->id),
-            'airplaneCode' => form_label('Airplane Code') . form_dropdown('airplaneCode', $airplaneCodes, $index),
+            'fid'      => form_input('id', $plane->id, 'class="form-control form-control-sm"'),
+            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="planeCodeSelect" class="form-control form-control-sm"'),
+            'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);
-
-        $this->data['pagebody'] = 'addPlane';
+        $this->data['action'] = '/fleet/submitAdd';
+        $this->data['pagebody'] = 'editplane';
         $this->render();
+    }
+
+    public function cancel() {
+        redirect('/fleet');
     }
 }
