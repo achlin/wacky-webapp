@@ -23,13 +23,7 @@
 
             {/fleet}
         </tbody>
-        <tbody>
-            <tr>
-                <td colspan="3" align="right">
-                    {addLink}
-                </td>
-            </tr>
-        </tbody>
+        {addLink}
     </table>
 
 </div>

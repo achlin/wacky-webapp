@@ -23,7 +23,7 @@ class Fleet extends Application
         $role = $this->session->userdata('userrole');
 
         $this->data['fleet'] = $source;
-        $this->data['addLink'] = ($role == ROLE_ADMIN) ? '<a href="/fleet/add"><input type="button" class="btn btn-primary" value="Add new.."/></a>' : '';
+        $this->data['addLink'] = ($role == ROLE_ADMIN) ? $this->parser->parse('addplane', array(), true) : '';
         $this->render();
     }
 
