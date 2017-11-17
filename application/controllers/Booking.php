@@ -33,7 +33,7 @@ class Booking extends Application
         $this->initAdj($adj);
         $availableFlights = array();
 
-        $result = $this->findPaths($adj);
+        $result = $this->findPaths($form, $adj);
 
         foreach ($result as $key => $value) {
             $processedFlights = $this->processFlights($form, $key, $value);
@@ -145,24 +145,26 @@ class Booking extends Application
     /**
      * Find the paths using the adjancency matrix.
      */
-    private function findPaths($adj) {
+    private function findPaths($form, $adj) {
         $combinedResult = array();
         $combinedResult[0] = $adj;
         $result = $adj;
         for ($i = 1; $i <= self::MAX_PATH_LENGTH - 1; $i++) {
-            $result = $this->matrixMult($result, $adj);
+            $result = $this->matrixMult($form, $result, $adj);
             $combinedResult[$i] = $result;
         }
         return $combinedResult;
     }
 
-    private function matrixMult($A, $B) {
+    private function matrixMult($form, $A, $B) {
         $result = array();
         foreach($this->allAirports as $startAirport) {
             foreach($this->allAirports as $endAirport) {
                 $combine = array();
                 foreach($this->allAirports as $midAirport) {
-                    $combine = array_merge($combine, $this->combinePaths($A[$startAirport->id][$midAirport->id], $B[$midAirport->id][$endAirport->id]));
+                    if ($midAirport->id != $form['endAirport'] && $startAirport->id != $endAirport->id) {
+                        $combine = array_merge($combine, $this->combinePaths($A[$startAirport->id][$midAirport->id], $B[$midAirport->id][$endAirport->id]));
+                    }
                 }
                 $result[$startAirport->id][$endAirport->id] = $combine;
             }
