@@ -6,17 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Booking extends Application
 {
-
-    private $adj = array();
-    private $visted = array();
     private $allAirports;
     const MAX_PATH_LENGTH = 3;
-    private $timezone;
 
     function __construct()
     {
         parent::__construct();
-        $this->timezone =  new DateTimeZone('America/Vancouver');
+        $this->allAirports = $this->airports->airportsWeService();
     }
 
     /**
@@ -24,21 +20,25 @@ class Booking extends Application
      */
     public function search() {
         $form = $this->input->post();
-        $this->allAirports = $this->airports->airportsWeService();
-        $this->initAdj();
-        $this->data['availableFlights'] = array();
-        $flights = $this->scheduleModel->all();
-
-        foreach($flights as $flight) {
-            array_push($this->adj[$flight->departsFrom][$flight->arrivesAt], array($flight));
+        if (isset($form['startAirport']) && isset($form['endAirport'])) {
+            $this->session->set_userdata('search', $form);
+        } else {
+            $form = $this->session->userdata("search");
+            if (!isset($form['startAirport']) || !isset($form['endAirport'])) {
+                redirect('/');
+            }
         }
 
-        $result = $this->findPaths();
+        $adj = array();
+        $this->initAdj($adj);
+        $availableFlights = array();
+
+        $result = $this->findPaths($adj);
 
         foreach ($result as $key => $value) {
-            $processedPath = $this->processPaths($form, $key, $value);
-            if (!empty($processedPath['flights'])) {
-                array_push($this->data['availableFlights'], $processedPath);
+            $processedFlights = $this->processFlights($form, $key, $value);
+            if (!empty($processedFlights['flights'])) {
+                array_push($availableFlights, $processedFlights);
             }
         }
 
@@ -46,60 +46,70 @@ class Booking extends Application
         $this->data['departureCity'] = $this->allAirports[$form['startAirport']]->community;
         $this->data['arrivesAt'] = $form['endAirport'];
         $this->data['arrivalCity'] = $this->allAirports[$form['endAirport']]->community;
-
+        $this->data['availableFlights'] = $availableFlights;
         $this->showit();
     }
 
     /**
-     * Process found paths into a format that's displayable.
+     * Process found flights into a format that's displayable.
      */
-    private function processPaths($form, $key, $value) {
+    private function processFlights($form, $key, $value) {
         $flights = array();
-        $airports = $this->airports->airportsWeService();
-        $arrow = '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>';
         $tempflights = $value[$form['startAirport']][$form['endAirport']];
 
         foreach($tempflights as $tempflight) {
-            $cityPath = '';
-            $flightPathId = '';
-            $flight = array();
-            $totalDepartureDate;
-            $lastSegmentArrivalTime = '00:00';
-            $daysCount = 0;
-            foreach($tempflight as $segment) {
-                array_push($flight, (array) $segment);
-                if ($cityPath) {
-                    $cityPath .= " " . $arrow . " " . $this->allAirports[$segment->arrivesAt]->community;
-                } else {
-                    $departureCity = $this->allAirports[$segment->departsFrom]->community;
-                    $arrivalCity = $this->allAirports[$segment->arrivesAt]->community;
-                    $cityPath .= $departureCity . " " . $arrow . " " . $arrivalCity;
-                    $totalDepartureDate = DateTime::createFromFormat('H:i', $segment->departureTime, $this->timezone);
-                }
-
-                $segmentDepartDate = DateTime::createFromFormat('H:i', $segment->departureTime, $this->timezone);
-                $lastSegmentArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $this->timezone);
-
-                if ($lastSegmentArrivalDate >= $segmentDepartDate) {
-                    $daysCount++;
-                }
-                $lastSegmentArrivalTime = $segment->arrivalTime;
-                $flightPathId .= $segment->id;
-            }
-
-            $totalArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $this->timezone);
-
-            $totalDepartureDateF = $this->dateFormatting($totalDepartureDate, $daysCount);
-            $totalArrivalDateF = $this->dateFormatting($totalArrivalDate, ++$daysCount);
-
-            array_push($flights, array('flight' => $flight,
-                            'totalDepartureDate' => $totalDepartureDateF,
-                            'totalArrivalTime' => $totalArrivalDateF,
-                            'cityPath' => $cityPath,
-                            'flightPathId' => $flightPathId));
+            $processedFlight = $this->processFlightInfo($tempflight);
+            array_push($flights, $processedFlight);
         }
+
         return array('flights' => $flights,
-                    'NoOfStops' => $key-1);
+                    'NoOfStops' => $key);
+    }
+
+    /**
+     * Process found flight into a format that's displayable.
+     */
+    private function processFlightInfo($tempflight) {
+        $timezone =  new DateTimeZone('America/Vancouver');
+        $cityPath = '';
+        $flightPathId = '';
+        $flight = array();
+        $lastSegmentArrivalTime = '00:00';
+        $daysCount = 0;
+        foreach($tempflight as $segment) {
+            array_push($flight, (array) $segment);
+            $this->formatCityPath($segment, $cityPath);
+
+            $segmentDepartDate = DateTime::createFromFormat('H:i', $segment->departureTime, $timezone);
+            $lastSegmentArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $timezone);
+
+            $this->checkForNextDayFlight($lastSegmentArrivalDate, $segmentDepartDate, $daysCount);
+
+            $lastSegmentArrivalTime = $segment->arrivalTime;
+            $flightPathId .= $segment->id;
+        }
+
+        $totalDepartureDate = DateTime::createFromFormat('H:i', $tempflight[0]->departureTime, $timezone);
+        $totalArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $timezone);
+        $totalDepartureDateF = $this->dateFormatting($totalDepartureDate, 1);
+        $totalArrivalDateF = $this->dateFormatting($totalArrivalDate, ++$daysCount);
+
+        return array('flight' => $flight,
+                        'totalDepartureDate' => $totalDepartureDateF,
+                        'totalArrivalTime' => $totalArrivalDateF,
+                        'cityPath' => $cityPath,
+                        'flightPathId' => $flightPathId);
+    }
+
+    private function formatCityPath($segment, &$cityPath) {
+        $arrow = '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>';
+        if ($cityPath) {
+            $cityPath .= " " . $arrow . " " . $this->allAirports[$segment->arrivesAt]->community;
+        } else {
+            $departureCity = $this->allAirports[$segment->departsFrom]->community;
+            $arrivalCity = $this->allAirports[$segment->arrivesAt]->community;
+            $cityPath .= $departureCity . " " . $arrow . " " . $arrivalCity;
+        }
     }
 
     private function dateFormatting($date, $daysToAdd) {
@@ -107,29 +117,39 @@ class Booking extends Application
         return $date->format('Y-m-d H:i T');
     }
 
+    private function checkForNextDayFlight($lastSegmentArrivalDate, $segmentDepartDate, &$daysCount) {
+        if ($lastSegmentArrivalDate >= $segmentDepartDate) {
+            $daysCount++;
+        }
+    }
+
     /**
-     * Initialize adjancency matrix with empty arrays.
+     * Initialize adjancency matrix with array of flights.
      */
-    private function initAdj() {
+    private function initAdj(&$adj) {
         foreach($this->allAirports as $startAirport) {
             foreach($this->allAirports as $endAirport) {
-                $this->adj[$startAirport->id][$endAirport->id] = array();
+                $adj[$startAirport->id][$endAirport->id] = array();
             }
+        }
+
+        $flights = $this->scheduleModel->all();
+
+        foreach($flights as $flight) {
+            array_push($adj[$flight->departsFrom][$flight->arrivesAt], array($flight));
         }
     }
 
     /**
      * Find the paths using the adjancency matrix.
      */
-    private function findPaths() {
+    private function findPaths($adj) {
         $combinedResult = array();
-        $combinedResult[1] = $this->adj;
-        for ($pathLength = 2; $pathLength <= self::MAX_PATH_LENGTH; $pathLength++) {
-            $result = $this->adj;
-            for ($i = 2; $i <= $pathLength; $i++) {
-                $result = $this->matrixMult($result, $this->adj);
-            }
-            $combinedResult[$pathLength] = $result;
+        $combinedResult[0] = $adj;
+        $result = $adj;
+        for ($i = 1; $i <= self::MAX_PATH_LENGTH - 1; $i++) {
+            $result = $this->matrixMult($result, $adj);
+            $combinedResult[$i] = $result;
         }
         return $combinedResult;
     }
