@@ -25,7 +25,7 @@
                 </td>
             </tr>
             <tr id="{flightPathId}" class="collapse">
-                <td>
+                <td colspan="2">
                     <table class="table-bordered" id="bookingFlightTable">
                         <thead>
                             <tr>

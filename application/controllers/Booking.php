@@ -62,15 +62,34 @@ class Booking extends Application
             array_push($flights, $processedFlight);
         }
 
+        usort($flights, array($this,'sortByTotalFlightTime'));
+
         return array('flights' => $flights,
                     'NoOfStops' => $key);
+    }
+
+    function sortByTotalFlightTime($flightA, $flightB) {
+        $timezone = new DateTimeZone('America/Vancouver');
+        $flightATime = DateTime::createFromFormat('H:i', '00:00', $timezone);
+        $flightBTime = DateTime::createFromFormat('H:i', '00:00', $timezone);
+
+        $flightATime->add($flightA['totalInterval']);
+        $flightBTime->add($flightB['totalInterval']);
+
+        if ($flightATime < $flightBTime) {
+            return -1;
+        } elseif ($flightATime == $flightBTime) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     /**
      * Process found flight into a format that's displayable.
      */
     private function processFlightInfo($tempflight) {
-        $timezone =  new DateTimeZone('America/Vancouver');
+        $timezone = new DateTimeZone('America/Vancouver');
         $cityPath = '';
         $flightPathId = '';
         $flight = array();
@@ -93,11 +112,13 @@ class Booking extends Application
         $totalArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $timezone);
         $totalDepartureDateF = $this->dateFormatting($totalDepartureDate, 1);
         $totalArrivalDateF = $this->dateFormatting($totalArrivalDate, ++$daysCount);
-        $totalTime = $totalDepartureDate->diff($totalArrivalDate)->format('%dd %Hh %Im');
+        $totalInterval = $totalDepartureDate->diff($totalArrivalDate);
+        $totalTime = $totalInterval->format('%dd %Hh %Im');
 
         return array('flight' => $flight,
                         'totalDepartureDate' => $totalDepartureDateF,
                         'totalArrivalTime' => $totalArrivalDateF,
+                        'totalInterval' => $totalInterval,
                         'totalTime' => $totalTime,
                         'cityPath' => $cityPath,
                         'flightPathId' => $flightPathId);
