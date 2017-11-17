@@ -93,10 +93,12 @@ class Booking extends Application
         $totalArrivalDate = DateTime::createFromFormat('H:i', $lastSegmentArrivalTime, $timezone);
         $totalDepartureDateF = $this->dateFormatting($totalDepartureDate, 1);
         $totalArrivalDateF = $this->dateFormatting($totalArrivalDate, ++$daysCount);
+        $totalTime = $totalDepartureDate->diff($totalArrivalDate)->format('%dd %Hh %Im');
 
         return array('flight' => $flight,
                         'totalDepartureDate' => $totalDepartureDateF,
                         'totalArrivalTime' => $totalArrivalDateF,
+                        'totalTime' => $totalTime,
                         'cityPath' => $cityPath,
                         'flightPathId' => $flightPathId);
     }

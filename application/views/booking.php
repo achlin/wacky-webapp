@@ -12,12 +12,16 @@
             <tr data-toggle="collapse" href="#{flightPathId}">
                 <td>
                     <div>
-                        <i class="fa fa-plane" aria-hidden="true"></i>   {cityPath}<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+                        <i class="fa fa-globe" aria-hidden="true"></i> {cityPath}
                     </div>
                     <div>
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>   {totalDepartureDate} <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {totalArrivalTime}
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> {totalDepartureDate} <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {totalArrivalTime}
                     </div>
-                    <div></div>
+                </td>
+                <td>
+                    <div class="float-right">
+                        {totalTime} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </div>
                 </td>
             </tr>
             <tr id="{flightPathId}" class="collapse">
