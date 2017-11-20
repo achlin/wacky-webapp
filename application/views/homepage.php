@@ -1,6 +1,6 @@
 <a class="btn btn-primary" data-popup-open="popup-1" href="#">Book now!</a>
 <div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item homecard">
+    <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item homecard">
         <div class="card h-100">
             <a><img class="card-img-top" src="/assets/images/ypr.jpg" alt=""></a>
             <div class="card-body">
@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item homecard">
+    <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item homecard">
         <div class="card h-100">
             <a><img class="card-img-top" src="/assets/images/airports.jpg" alt=""></a>
             <div class="card-body">
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item homecard">
+    <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item homecard">
         <div class="card h-100">
             <a><img class="card-img-top" src="/assets/images/flights.jpg" alt=""></a>
             <div class="card-body">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item homecard">
+    <div class="col-lg-3 col-md-6 col-sm-6 portfolio-item homecard">
         <div class="card h-100">
             <a><img class="card-img-top" src="/assets/images/fleet.png" alt=""></a>
             <div class="card-body">

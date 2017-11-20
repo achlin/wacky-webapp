@@ -113,7 +113,7 @@ class Booking extends Application
         $totalDepartureDateF = $this->dateFormatting($totalDepartureDate, 1);
         $totalArrivalDateF = $this->dateFormatting($totalArrivalDate, ++$daysCount);
         $totalInterval = $totalDepartureDate->diff($totalArrivalDate);
-        $totalTime = $totalInterval->format('%dd %Hh %Im');
+        $totalTime = $this->getTotalTimeInFlight($totalDepartureDate, $totalArrivalDate, $totalInterval);
 
         return array('flight' => $flight,
                         'totalDepartureDate' => $totalDepartureDateF,
@@ -138,6 +138,11 @@ class Booking extends Application
     private function dateFormatting($date, $daysToAdd) {
         $date->add(new DateInterval('P' . $daysToAdd . 'D'));
         return $date->format('Y-m-d H:i T');
+    }
+
+    private function getTotalTimeInFlight($totalDepartureDate, $totalArrivalDate, $totalInterval) {
+        $totalHours = (int) (abs($totalArrivalDate->getTimestamp() - $totalDepartureDate->getTimestamp()) / (60 * 60));
+        return $totalHours . "h " . $totalInterval->format('%Im');
     }
 
     private function checkForNextDayFlight($lastSegmentArrivalDate, $segmentDepartDate, &$daysCount) {

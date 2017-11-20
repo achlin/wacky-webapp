@@ -14,8 +14,11 @@
                     <div>
                         <i class="fa fa-globe" aria-hidden="true"></i> {cityPath}
                     </div>
+
+                </td>
+                <td>
                     <div>
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> {totalDepartureDate} <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {totalArrivalTime}
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> {totalDepartureDate} <i class="fa fa-minus" aria-hidden="true"></i> {totalArrivalTime}
                     </div>
                 </td>
                 <td>
