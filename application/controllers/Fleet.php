@@ -80,7 +80,7 @@ class Fleet extends Application
 
         $fields = array(
             'fid'      => form_input('id', $plane->id, 'class="form-control form-control-sm" readonly'),
-            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="planeCodeSelect" class="form-control form-control-sm"'),
+            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="plane-code-selector" class="form-control form-control-sm"'),
             'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);
@@ -156,7 +156,7 @@ class Fleet extends Application
 
         $fields = array(
             'fid'      => form_input('id', $plane->id, 'class="form-control form-control-sm"'),
-            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="planeCodeSelect" class="form-control form-control-sm"'),
+            'fairplaneCode' => form_dropdown('airplaneCode', $airplaneCodes, $index, 'id="plane-code-selector" class="form-control form-control-sm"'),
             'zsubmit'       => form_submit('submit', 'Save', 'class="btn btn-primary"'),
         );
         $this->data = array_merge($this->data, $fields);

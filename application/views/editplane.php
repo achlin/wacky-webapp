@@ -2,7 +2,7 @@
 <div class="row">
     <form class="container" role="form" action="{action}" method="post">
         <table class="table table-striped table-dark">
-            <tbody id="planeInfoBody">
+            <tbody id="plane-info-body">
                 <tr>
                     <td>Plane ID:</td>
                     <td>{fid}</td>

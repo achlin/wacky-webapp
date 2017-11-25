@@ -29,7 +29,7 @@
             </tr>
             <tr id="{flightPathId}" class="collapse">
                 <td colspan="3">
-                    <table class="table-bordered" id="bookingFlightTable">
+                    <table class="table-bordered" id="booking-flight-table">
                         <thead>
                             <tr>
                                 <th>Flight No.</th>

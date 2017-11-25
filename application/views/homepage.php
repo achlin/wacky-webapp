@@ -44,27 +44,33 @@
 <div class="popup" data-popup="popup-1">
     <div class="popup-inner">
         <h4>Where would you like to go?</h2>
-        <form action="/booking/search" method="post">
+        <form id="booking-search-form" action="/booking/search" method="post" novalidate>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="flyingFromSelect">Flying from</label>
-                    <select class="form-control" id="flyingFromSelect" name="startAirport" required>
+                    <label for="flying-from-selector">Flying from</label>
+                    <select class="form-control" id="flying-from-selector" name="startAirport" required>
                         <option value="" disabled selected hidden>Choose...</option>
                         <option value={basecode}>{baselocation} ({basecode})</option>
                         {airports}
                         <option value={id}>{community} ({id})</option>
                         {/airports}
                     </select>
+                    <div class="invalid-feedback">
+                        Please select an origin.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="flyingToSelect">Flying to</label>
-                    <select class="form-control" id="flyingToSelect" name="endAirport" required>
+                    <label for="flying-to-selector">Flying to</label>
+                    <select class="form-control" id="flying-to-selector" name="endAirport" required>
                         <option value="" disabled selected hidden>Choose...</option>
                         <option value={basecode}>{baselocation} ({basecode})</option>
                         {airports}
                         <option value={id}>{community} ({id})</option>
                         {/airports}
                     </select>
+                    <div id="destination-invalid-feedback" class="invalid-feedback">
+                        Please select a destination.
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary float-right">Search</button>

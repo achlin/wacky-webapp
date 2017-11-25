@@ -1,5 +1,5 @@
 <div class="row">
-    <table class="table table-striped table-dark" id="flightTable">
+    <table class="table table-striped table-dark">
         <thead>
             <tr>
                 <th>Flight No.</th>
